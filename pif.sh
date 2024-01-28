@@ -33,7 +33,7 @@ create_kernel_json() {
   "FINGERPRINT": "$(get_value FINGERPRINT)",
   "SECURITY_PATCH": "$(get_value SECURITY_PATCH)",
   "FIRST_API_LEVEL": "$(get_value FIRST_API_LEVEL)",
-  "KERNEL": "3.18.66-perf-gc8b1dc7"
+  "KERNEL": "asus-perf"
 }
 EOF
 }
