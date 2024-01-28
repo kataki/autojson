@@ -16,6 +16,22 @@ create_json() {
   "MODEL": "$(get_value MODEL)",
   "FINGERPRINT": "$(get_value FINGERPRINT)",
   "SECURITY_PATCH": "$(get_value SECURITY_PATCH)",
+  "FIRST_API_LEVEL": "$(get_value FIRST_API_LEVEL)"
+}
+EOF
+}
+
+# Create the json file with KERNEL field
+create_kernel_json() {
+  cat <<EOF >"${service_kernel_file}"
+{
+  "PRODUCT": "$(get_value PRODUCT)",
+  "DEVICE": "$(get_value DEVICE)",
+  "MANUFACTURER": "$(get_value MANUFACTURER)",
+  "BRAND": "$(get_value BRAND)",
+  "MODEL": "$(get_value MODEL)",
+  "FINGERPRINT": "$(get_value FINGERPRINT)",
+  "SECURITY_PATCH": "$(get_value SECURITY_PATCH)",
   "FIRST_API_LEVEL": "$(get_value FIRST_API_LEVEL)",
   "KERNEL": "3.18.66-perf-gc8b1dc7"
 }
@@ -29,6 +45,7 @@ tmp_dir="$(mktemp -d)"
 apk_file="${tmp_dir}/xiaomi.apk"
 extracted_apk="${tmp_dir}/Extractedapk"
 service_file="pif.json"
+service_kernel_file="pif_kernel.json"
 fields_file="${extracted_apk}/res/xml/inject_fields.xml"
 
 trap 'rm -rf "${tmp_dir}"' EXIT
@@ -42,5 +59,7 @@ curl --silent --show-error --location --output "${apk_file}" "${lastLink}"
 apktool d "${apk_file}" -o "${extracted_apk}" -f
 
 create_json
+create_kernel_json
 
 cat "${service_file}"
+cat "${service_kernel_file}"
